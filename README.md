@@ -13,7 +13,7 @@ This will produce a random hobo name, and number, like so:
 #171: Twink the Reading-Room Snoozer
 ```
 
-cwh_hobo also accepts two attributes: @wraptag@ and @class@. So, for instance, if you want to wrap the output in a paragraph tag with the class of "hobo", you'd have the following:
+cwh_hobo also accepts two attributes: `wraptag` and `class`. So, for instance, if you want to wrap the output in a paragraph tag with the class of "hobo", you'd have the following:
 
 ```
 <txp:cwh_hobo wraptag="p" class="hobo" />
