@@ -1,7 +1,7 @@
 cwh_hobo
 ========
 
-cwh_hobo is a Textpattern plugin that will display a random hobo name from John Hodgeman's list of 700 hobo names taken from his book [The Areas of my Expertise](http://www.amazon.ca/exec/obidos/ASIN/1594482225/suburbanplayb-20) (more information [here](http://www.areasofmyexpertise.com/)). Once installed, you use it by simply placing the follwing in any article, page, or form within Textpattern:
+cwh_hobo is a [Textpattern](http://textpattern.com) plugin that will display a random hobo name from John Hodgeman's list of 700 hobo names taken from his book [The Areas of my Expertise](http://www.amazon.ca/exec/obidos/ASIN/1594482225/suburbanplayb-20) (more information [here](http://www.areasofmyexpertise.com/)). Once installed, you use it by simply placing the follwing in any article, page, or form within Textpattern:
 
 ```
 <txp:cwh_hobo />
