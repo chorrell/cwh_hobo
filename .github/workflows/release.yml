@@ -14,8 +14,8 @@ jobs:
         uses: actions/checkout@master
       - name: Build Plugin
         run: |
-          php cwh_hobo.php > cwh_hobo-${{ github.ref }}.txt
-          zip --junk-paths cwh_hobo-${{ github.ref }}.zip cwh_hobo-${{ github.ref }}.txt README.md
+          php cwh_hobo.php > cwh_hobo.txt
+          zip --junk-paths cwh_hobo.zip cwh_hobo.txt README.md
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
