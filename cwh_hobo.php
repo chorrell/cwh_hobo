@@ -1,7 +1,7 @@
 <?php
 
 $plugin['name'] = 'cwh_hobo';
-$plugin['version'] = '0.2';
+$plugin['version'] = '0.2.0';
 $plugin['author'] = 'Christopher Horrell';
 $plugin['author_uri'] = 'http://horrell.ca/';
 $plugin['description'] = 'Generates a random hobo name from John Hogeman\'s book "The Areas of my Expertise".';

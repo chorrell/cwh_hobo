@@ -12,10 +12,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@master
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: Build Plugin
         run: |
-          php cwh_hobo.php > cwh_hobo-${{ github.ref }}.txt
-          zip --junk-paths cwh_hobo-${{ github.ref }}.zip cwh_hobo-${{ github.ref }}.txt README.md
+          php cwh_hobo.php > cwh_hobo.txt
+          zip --junk-paths cwh_hobo-${{ steps.get_version.outputs.VERSION }}.zip cwh_hobo.txt README.md
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -33,6 +36,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./cwh_hobo-${{ github.ref }}.zip
-          asset_name: cwh_hobo-${{ github.ref }}.zip
+          asset_path: ./cwh_hobo-${{ steps.get_version.outputs.VERSION }}.zip
+          asset_name: cwh_hobo-${{ steps.get_version.outputs.VERSION }}.zip
           asset_content_type: application/zip
