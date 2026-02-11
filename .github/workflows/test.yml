@@ -1,29 +1,64 @@
 name: Test
 
-on: [push]
+on:
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  
-  build:
+  test:
+    name: PHP ${{ matrix.php-version }}
+    runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - '8.4'
+          - '8.5'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: none
+
+      - name: Lint plugin file
+        run: php -l cwh_hobo.php
+
+      - name: Lint test file
+        run: php -l test_plugin.php
+
+      - name: Run plugin tests
+        run: php test_plugin.php
+
+      - name: Build plugin distribution
+        run: php cwh_hobo.php > cwh_hobo-test.txt
+
+      - name: Verify build output
+        run: |
+          if [ ! -s cwh_hobo-test.txt ]; then
+            echo "Build failed: output file is empty"
+            exit 1
+          fi
+          echo "Build successful: $(wc -c < cwh_hobo-test.txt) bytes"
+
+  markdown-lint:
+    name: Markdown Lint
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v6
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '7.4'
+      - name: Checkout code
+        uses: actions/checkout@v6
 
-    - name: Build
-      run: php -e cwh_hobo.php
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-  lint:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v6
-
-    - name: Lint
-      run: php -l cwh_hobo.php
+      - name: Run markdownlint
+        run: npx markdownlint-cli README.md CHANGELOG.md
