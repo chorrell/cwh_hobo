@@ -2,8 +2,7 @@
 
 A [Textpattern CMS](https://textpattern.com) plugin that displays a random hobo
 name from John Hodgeman's list of 700 hobo names taken from his book
-[The Areas of my Expertise](https://www.amazon.ca/Areas-Expertise-Instructive-Annotation-2006-09-05/dp/B0163DW6CW/)
-([more information on Wikipedia](https://en.wikipedia.org/wiki/The_Areas_of_My_Expertise)).
+[The Areas of my Expertise](https://en.wikipedia.org/wiki/The_Areas_of_My_Expertise).
 
 ## Requirements
 
@@ -33,8 +32,7 @@ name from John Hodgeman's list of 700 hobo names taken from his book
 For development and testing:
 
 1. In Textpattern admin, go to **Admin → Preferences → Admin**
-2. Set "Plugin cache directory path" to an absolute path (e.g.,
-   `/var/www/txp-plugins`)
+2. Set "Plugin cache directory path" to an absolute path (e.g., `/var/www/txp-plugins`)
 3. Copy `cwh_hobo.php` to that directory
 4. The plugin will appear in **Admin → Plugins** and can be activated
 
@@ -180,4 +178,4 @@ Christopher Horrell
 ## Credits
 
 Hobo names taken from John Hodgman's book
-"[The Areas of my Expertise](https://www.amazon.ca/Areas-Expertise-Instructive-Annotation-2006-09-05/dp/B0163DW6CW/)".
+"[The Areas of my Expertise](https://en.wikipedia.org/wiki/The_Areas_of_My_Expertise)".
