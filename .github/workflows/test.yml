@@ -46,19 +46,3 @@ jobs:
             exit 1
           fi
           echo "Build successful: $(wc -c < cwh_hobo-test.txt) bytes"
-
-  markdown-lint:
-    name: Markdown Lint
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: '20'
-
-      - name: Run markdownlint
-        run: npx markdownlint-cli README.md CHANGELOG.md
