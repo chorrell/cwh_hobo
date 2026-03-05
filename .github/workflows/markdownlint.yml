@@ -1,11 +1,11 @@
 name: markdownlint 
+permissions:
+  contents: read
+  pull-requests: write
 
 on:
   pull_request:
-
-permissions:
-  contents: read
-
+    
 jobs:
   markdownlint:
     name: Markdown Lint
