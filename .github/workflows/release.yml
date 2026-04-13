@@ -27,7 +27,7 @@ jobs:
           php cwh_hobo.php > cwh_hobo.txt
           zip --junk-paths cwh_hobo-${{ steps.get_version.outputs.VERSION }}.zip cwh_hobo.txt README.md
       - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: |
             cwh_hobo.txt
