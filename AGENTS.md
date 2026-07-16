@@ -173,6 +173,9 @@ Tests cover:
 - PHP syntax check (PHP 8.4 and 8.5)
 - Test suite execution
 - Build verification
+
+**markdownlint.yml** - Runs on every PR to `main`:
+
 - Markdown linting (README.md and CHANGELOG.md)
 
 **release.yml** - Runs on pushed git tags (v*):
@@ -367,10 +370,12 @@ Runs on: Pull requests to `main`
    - Build distribution
    - Verify build output
 
-2. **markdown-lint**
-   - Checkout code
-   - Setup Node.js 20
-   - Run markdownlint on README.md and CHANGELOG.md
+### Markdown Lint Workflow (.github/workflows/markdownlint.yml)
+
+Runs on: Pull requests to `main`
+
+- Checkout code
+- Run markdownlint on README.md and CHANGELOG.md
 
 **Important**: All checks must pass before merging. When changing markdown
 files, always run markdownlint locally first.
