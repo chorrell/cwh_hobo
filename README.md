@@ -163,6 +163,17 @@ php cwh_hobo.php > cwh_hobo-1.0.0.txt
 This creates a base64-encoded plugin file that can be distributed and installed
 via the Textpattern admin interface.
 
+### Pre-commit Hooks
+
+This repo uses [pre-commit](https://pre-commit.com/) to catch issues (syntax
+errors, secrets, markdown lint failures, etc.) before they're committed:
+
+```bash
+pip install pre-commit   # or: brew install pre-commit
+pre-commit install
+pre-commit run --all-files
+```
+
 ## License
 
 Released under the [GPL-2.0 license](LICENSE).

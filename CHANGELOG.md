@@ -5,6 +5,15 @@ All notable changes to cwh_hobo will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Pre-commit configuration (`.pre-commit-config.yaml`) with actionlint,
+  gitleaks, markdownlint-cli2, zizmor, generic hygiene hooks, and a local
+  `php -l` syntax check
+- Dependabot updates for pre-commit hook versions
+
 ## [1.0.0] - 2026-02-10
 
 ### Changed

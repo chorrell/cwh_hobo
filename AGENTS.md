@@ -18,18 +18,21 @@ self-contained plugin with no external dependencies.
 
 ```text
 .
-├── cwh_hobo.php          # Main plugin file (single-file plugin)
-├── manifest.json         # Plugin metadata for package managers
-├── test_plugin.php       # Test suite (executable PHP script)
-├── zem_tpl.php          # Plugin compiler (Textpattern compiler)
-├── README.md            # User documentation
-├── CHANGELOG.md         # Version history
-├── LICENSE              # GPL-2.0 license
-├── CODEOWNERS           # GitHub code ownership
+├── cwh_hobo.php               # Main plugin file (single-file plugin)
+├── manifest.json              # Plugin metadata for package managers
+├── test_plugin.php            # Test suite (executable PHP script)
+├── zem_tpl.php                # Plugin compiler (Textpattern compiler)
+├── README.md                  # User documentation
+├── CHANGELOG.md                # Version history
+├── LICENSE                    # GPL-2.0 license
+├── CODEOWNERS                 # GitHub code ownership
+├── .pre-commit-config.yaml    # Local pre-commit hook configuration
 └── .github/
+    ├── dependabot.yml         # Dependency update automation (Actions + pre-commit)
     └── workflows/
-        ├── test.yml     # GitHub Actions CI/CD
-        └── release.yml  # GitHub Actions release automation
+        ├── test.yml           # GitHub Actions CI/CD
+        ├── markdownlint.yml   # Markdown lint CI
+        └── release.yml        # GitHub Actions release automation
 ```
 
 ## Key Files
@@ -86,6 +89,13 @@ functionality).
 
    ```bash
    npx markdownlint-cli README.md CHANGELOG.md AGENTS.md
+   ```
+
+5. **Run pre-commit hooks** (recommended before committing; runs actionlint,
+   gitleaks, markdownlint-cli2, zizmor, generic hygiene checks, and `php -l`):
+
+   ```bash
+   pre-commit run --all-files
    ```
 
 ### Testing in Textpattern
@@ -437,15 +447,17 @@ Runs on: Pushed git tags matching `v*` (e.g., v1.0.0, v1.2.3)
 
 ## Quick Reference: File Purposes
 
-| File                         | Purpose          | Modify When...             |
-| ---------------------------- | ---------------- | -------------------------- |
-| `cwh_hobo.php`               | Main plugin      | Adding features, bugs      |
-| `test_plugin.php`            | Test suite       | Adding tests               |
-| `manifest.json`              | Package metadata | Updating version           |
-| `README.md`                  | User guide       | Changing usage/reqs        |
-| `CHANGELOG.md`               | Version history  | Every change               |
-| `AGENTS.md`                  | This file        | Changing arch/conventions  |
-| `.github/workflows/test.yml` | CI/CD            | Changing test reqs         |
+| File                         | Purpose            | Modify When...               |
+| ---------------------------- | ------------------ | ---------------------------- |
+| `cwh_hobo.php`               | Main plugin        | Adding features, bugs        |
+| `test_plugin.php`            | Test suite         | Adding tests                 |
+| `manifest.json`              | Package metadata   | Updating version             |
+| `README.md`                  | User guide         | Changing usage/reqs          |
+| `CHANGELOG.md`               | Version history    | Every change                 |
+| `AGENTS.md`                  | This file          | Changing arch/conventions    |
+| `.pre-commit-config.yaml`    | Pre-commit hooks   | Changing/adding local checks |
+| `.github/dependabot.yml`     | Dependency updates | Adding new update ecosystems |
+| `.github/workflows/test.yml` | CI/CD              | Changing test reqs           |
 
 ## Summary for AI Agents
 
