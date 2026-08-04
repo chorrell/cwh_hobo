@@ -32,7 +32,7 @@ jobs:
           zip --junk-paths "cwh_hobo-${VERSION}.zip" cwh_hobo.txt README.md
       - name: Create Release
         # zizmor: ignore[superfluous-actions] keeping the well-known release action rather than raw `gh` CLI calls
-        uses: softprops/action-gh-release@c12583777ecdfd3be55c69cf75464299dc01057e # v3.0.2
+        uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228 # v3.0.2
         with:
           files: |
             cwh_hobo.txt
