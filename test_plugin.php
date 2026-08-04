@@ -2,7 +2,7 @@
 <?php
 /**
  * Simple test script for cwh_hobo plugin
- * 
+ *
  * Run this from command line to verify basic functionality:
  * php test_plugin.php
  */
@@ -35,7 +35,7 @@ $tests_failed = 0;
 
 function test($name, $condition, $message = '') {
     global $tests_passed, $tests_failed;
-    
+
     if ($condition) {
         echo "✓ PASS: {$name}\n";
         $tests_passed++;

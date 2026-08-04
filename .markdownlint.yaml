@@ -1,2 +1,7 @@
 # Exclude line length rule to allow longer documentation lines
 MD013: false
+
+# Allow repeated subheadings (e.g. "### Added") across different
+# "## [x.y.z]" changelog entries; only flag duplicates under the same parent
+MD024:
+  siblings_only: true

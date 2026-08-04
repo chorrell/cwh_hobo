@@ -14,20 +14,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
         with:
           php-version: '8.4'
       - name: Get the version
         id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+        run: echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> "$GITHUB_OUTPUT"
       - name: Build Plugin
+        env:
+          VERSION: ${{ steps.get_version.outputs.VERSION }}
         run: |
           php cwh_hobo.php > cwh_hobo.txt
-          zip --junk-paths cwh_hobo-${{ steps.get_version.outputs.VERSION }}.zip cwh_hobo.txt README.md
+          zip --junk-paths "cwh_hobo-${VERSION}.zip" cwh_hobo.txt README.md
       - name: Create Release
-        uses: softprops/action-gh-release@v3
+        # zizmor: ignore[superfluous-actions] keeping the well-known release action rather than raw `gh` CLI calls
+        uses: softprops/action-gh-release@c12583777ecdfd3be55c69cf75464299dc01057e # v3.0.2
         with:
           files: |
             cwh_hobo.txt

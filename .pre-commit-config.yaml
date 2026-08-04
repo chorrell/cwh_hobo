@@ -1,0 +1,41 @@
+---
+repos:
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.12
+    hooks:
+      - id: actionlint
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
+
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.23.1
+    hooks:
+      - id: markdownlint-cli2-docker
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-added-large-files
+      - id: mixed-line-ending
+
+  - repo: https://github.com/zizmorcore/zizmor-pre-commit
+    rev: v1.28.0
+    hooks:
+      - id: zizmor
+
+  # Local hook: mirror the PHP syntax check that .github/workflows/test.yml runs
+  - repo: local
+    hooks:
+      - id: php-lint
+        name: PHP syntax check (php -l)
+        entry: php -l
+        language: system
+        files: \.php$

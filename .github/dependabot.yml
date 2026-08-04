@@ -8,8 +8,26 @@ updates:
       monthly-batch:
         patterns:
           - "*"
+    cooldown:
+      default-days: 7
     pull-request-branch-name:
       separator: "/"
     commit-message:
       prefix: "ci"
+      include: "scope"
+
+  - package-ecosystem: "pre-commit"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    groups:
+      monthly-batch:
+        patterns:
+          - "*"
+    cooldown:
+      default-days: 7
+    pull-request-branch-name:
+      separator: "/"
+    commit-message:
+      prefix: "chore"
       include: "scope"
