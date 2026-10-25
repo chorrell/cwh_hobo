@@ -1,5 +1,7 @@
 # cwh_hobo
 
+[![Test](https://github.com/chorrell/cwh_hobo/actions/workflows/test.yml/badge.svg)](https://github.com/chorrell/cwh_hobo/actions/workflows/test.yml)
+
 A [Textpattern CMS](https://textpattern.com) plugin that displays a random hobo
 name from John Hodgeman's list of 700 hobo names taken from his book
 [The Areas of my Expertise](https://en.wikipedia.org/wiki/The_Areas_of_My_Expertise).
