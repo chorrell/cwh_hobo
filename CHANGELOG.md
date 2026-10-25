@@ -28,9 +28,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-- CI and release workflows set `update: true` on `setup-php` so they always
-  use the latest PHP patch release (e.g. the fixes in PHP 8.4.27 and
-  8.5.12 from 21 Oct 2026)
+- CI and release workflows set the `update: true` env var on `setup-php` so
+  they always use the latest PHP patch release (e.g. the fixes in PHP 8.4.27
+  and 8.5.12 from 21 Oct 2026)
 
 ## [1.0.0] - 2026-02-10
 

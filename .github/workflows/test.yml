@@ -35,6 +35,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           coverage: none
+        env:
           # Always install the latest patch release, even if the runner has an older one
           update: true
 

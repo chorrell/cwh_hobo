@@ -251,7 +251,7 @@ Tests cover:
 
 - **Minimum**: PHP 8.0
 - **Tested**: PHP 8.4, 8.5 (the versions Textpattern recommends; latest
-  patch release via `update: true`)
+  patch release via setup-php's `update: true` env var)
 - **Features used**: Short array syntax `[]`, modern syntax
 
 ### Textpattern Version
