@@ -10,7 +10,7 @@
  * @author  Christopher Horrell
  * @link    https://horrell.ca/
  * @license GPL-2.0
- * @version 1.0.0
+ * @version 1.0.0 // x-release-please-version
  */
 
 // Plugin name is optional. If unset, it will be extracted from the current
@@ -22,7 +22,7 @@ $plugin['name'] = 'cwh_hobo';
 // 1 = Plugin help is in raw HTML. Not recommended.
 $plugin['allow_html_help'] = 1;
 
-$plugin['version'] = '1.0.0';
+$plugin['version'] = '1.0.0'; // x-release-please-version
 $plugin['author'] = 'Christopher Horrell';
 $plugin['author_uri'] = 'https://horrell.ca/';
 $plugin['description'] = 'Generates a random hobo name from John Hodgeman\'s book "The Areas of my Expertise".';

@@ -165,6 +165,16 @@ php cwh_hobo.php > cwh_hobo-1.0.0.txt
 This creates a base64-encoded plugin file that can be distributed and installed
 via the Textpattern admin interface.
 
+### Releases
+
+Releases are automated with
+[release-please](https://github.com/googleapis/release-please). PR titles use
+[conventional commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`,
+`docs:`, etc.; add `!` for breaking changes). After a releasable merge,
+release-please opens a release PR that bumps the version and updates
+`CHANGELOG.md`. Merging it tags the release, and the workflow attaches
+`cwh_hobo.txt` and a zip to the GitHub release.
+
 ### Pre-commit Hooks
 
 This repo uses [pre-commit](https://pre-commit.com/) to catch issues (syntax

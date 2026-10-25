@@ -1,22 +1,67 @@
+---
+# Release automation, modelled on chorrell/workflows. release-please keeps a
+# release PR open with the next version (from conventional commits), the
+# version bumps in cwh_hobo.php and manifest.json, and CHANGELOG.md. Merging
+# that PR creates a vX.Y.Z tag and GitHub Release; the build job then attaches
+# the plugin installer and zip to it.
+#
+# release-please runs with a GitHub App token, not GITHUB_TOKEN, because PRs
+# opened with GITHUB_TOKEN don't trigger CI.
 name: Release
-permissions:
-  contents: read
-  pull-requests: write
 
 on:
   push:
-    tags:
-    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+    branches:
+      - main
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
 
 jobs:
+  release-please:
+    name: release-please
+    runs-on: ubuntu-slim
+    # The App's private key lives in this environment, which only main can use
+    environment: release
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+    steps:
+      - name: Create GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ vars.RELEASE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+          permission-issues: write
+
+      - name: Run release-please
+        id: release
+        uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+
   build:
-    name: Create Release
+    name: Build and attach plugin
+    needs: release-please
+    if: needs.release-please.outputs.release_created == 'true'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      TAG: ${{ needs.release-please.outputs.tag_name }}
     steps:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ needs.release-please.outputs.tag_name }}
           persist-credentials: false
+
       - name: Setup PHP
         uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
         with:
@@ -24,23 +69,13 @@ jobs:
         env:
           # Always install the latest patch release, even if the runner has an older one
           update: true
-      - name: Get the version
-        id: get_version
-        run: echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> "$GITHUB_OUTPUT"
-      - name: Build Plugin
-        env:
-          VERSION: ${{ steps.get_version.outputs.VERSION }}
+
+      - name: Build plugin
         run: |
           php cwh_hobo.php > cwh_hobo.txt
-          zip --junk-paths "cwh_hobo-${VERSION}.zip" cwh_hobo.txt README.md
-      - name: Create Release
-        # zizmor: ignore[superfluous-actions] keeping the well-known release action rather than raw `gh` CLI calls
-        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
-        with:
-          files: |
-            cwh_hobo.txt
-            cwh_hobo-${{ steps.get_version.outputs.VERSION }}.zip
-          draft: false
-          prerelease: false
+          zip --junk-paths "cwh_hobo-${TAG}.zip" cwh_hobo.txt README.md
+
+      - name: Attach assets to release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "$TAG" cwh_hobo.txt "cwh_hobo-${TAG}.zip" --clobber --repo "$GITHUB_REPOSITORY"
