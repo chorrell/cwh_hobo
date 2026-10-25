@@ -85,7 +85,7 @@ if (0) {
 
 <ul>
 <li>Textpattern CMS 4.7+ (tested with 4.8.x and 4.9.0)</li>
-<li>PHP 8.0+ (tested with PHP 8.4 and 8.5)</li>
+<li>PHP 8.4+ (tested with PHP 8.4 and 8.5)</li>
 </ul>
 
 <h2>License</h2>
