@@ -5,40 +5,32 @@ All notable changes to cwh_hobo will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.0.0](https://github.com/chorrell/cwh_hobo/compare/v1.0.0...v2.0.0) (2026-10-25)
 
-### Added
+### ⚠ BREAKING CHANGES
 
-- Pre-commit configuration (`.pre-commit-config.yaml`) with actionlint,
-  gitleaks, markdownlint-cli2, zizmor, generic hygiene hooks, and a local
-  `php -l` syntax check
-- Dependabot updates for pre-commit hook versions
+* The stated minimum PHP version is now 8.4 (was 8.0), matching the versions CI tests (8.4 and 8.5) and the versions [Textpattern recommends](https://textpattern.com/about/system-requirements). PHP 8.0 and 8.1 are end of life. No code changed, so the plugin may still run on older PHP 8 releases, but they're no longer tested or supported ([#54](https://github.com/chorrell/cwh_hobo/pull/54))
 
-### Changed
+### Bug Fixes
 
-- **Breaking**: The stated minimum PHP version is now 8.4 (was 8.0), to
-  match the versions CI tests (8.4 and 8.5) and the versions
-  [Textpattern recommends](https://textpattern.com/about/system-requirements).
-  PHP 8.0 and 8.1 are end of life. No code changed, so the plugin may still
-  run on older PHP 8 releases, but they are no longer tested or supported
-- The `php -l` pre-commit hook runs in the `php:8.4-cli` Docker image, so PHP
-  no longer needs to be installed locally
-- Releases are automated with release-please, which opens a release PR with
-  the version bumps and CHANGELOG entry and attaches the built plugin to each
-  GitHub release
-
-### Fixed
-
-- `test_plugin.php` now defines `txpinterface` before loading the plugin.
-  Previously the plugin loaded `zem_tpl.php`, which compiled the plugin and
-  exited with status 0 before any test ran, so CI passed without testing
-  anything
+* The test suite now actually runs. `test_plugin.php` defines `txpinterface` before loading the plugin; previously the plugin loaded `zem_tpl.php`, which compiled the plugin and exited with status 0 before any test ran, so CI passed without testing anything ([#53](https://github.com/chorrell/cwh_hobo/pull/53))
 
 ### Security
 
-- CI and release workflows set the `update: true` env var on `setup-php` so
-  they always use the latest PHP patch release (e.g. the fixes in PHP 8.4.27
-  and 8.5.12 from 21 Oct 2026)
+* CI and release builds always install the latest PHP patch release (e.g. 8.4.27 and 8.5.12, which fix the issues in advisory AV26-1070) ([#53](https://github.com/chorrell/cwh_hobo/pull/53))
+
+### Continuous Integration
+
+* Releases are automated with release-please, and the built `cwh_hobo.txt` and zip are attached to each GitHub release ([#55](https://github.com/chorrell/cwh_hobo/pull/55))
+* Pre-commit hooks (actionlint, gitleaks, markdownlint-cli2, zizmor, hygiene checks, `php -l`), with the PHP syntax check running in Docker ([#42](https://github.com/chorrell/cwh_hobo/pull/42)) ([#53](https://github.com/chorrell/cwh_hobo/pull/53))
+* zizmor and markdownlint run in CI via the shared `chorrell/workflows` reusable workflows ([#50](https://github.com/chorrell/cwh_hobo/pull/50)) ([#51](https://github.com/chorrell/cwh_hobo/pull/51))
+* Workflow permissions are set explicitly and GitHub Actions are pinned by SHA ([#34](https://github.com/chorrell/cwh_hobo/pull/34)) ([#42](https://github.com/chorrell/cwh_hobo/pull/42))
+* Dependabot updates GitHub Actions and pre-commit hooks monthly, in groups ([#41](https://github.com/chorrell/cwh_hobo/pull/41))
+
+### Documentation
+
+* Add AGENTS.md and a CLAUDE.md that imports it ([#28](https://github.com/chorrell/cwh_hobo/pull/28)) ([#49](https://github.com/chorrell/cwh_hobo/pull/49))
+* Add a CI status badge and fix links and formatting in the README ([#31](https://github.com/chorrell/cwh_hobo/pull/31)) ([#52](https://github.com/chorrell/cwh_hobo/pull/52))
 
 ## [1.0.0] - 2026-02-10
 
