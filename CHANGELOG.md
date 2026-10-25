@@ -5,6 +5,13 @@ All notable changes to cwh_hobo will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0](https://github.com/chorrell/cwh_hobo/compare/v1.0.0...v2.0.0) (2026-10-25)
+
+
+### Continuous Integration
+
+* automate releases with release-please ([#55](https://github.com/chorrell/cwh_hobo/issues/55)) ([5f7bf9c](https://github.com/chorrell/cwh_hobo/commit/5f7bf9c67d263b4bafdeb55c0644c6392dc53c86))
+
 ## [Unreleased]
 
 ### Added

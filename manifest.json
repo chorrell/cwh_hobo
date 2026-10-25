@@ -1,7 +1,7 @@
 {
   "name": "cwh_hobo",
   "description": "Generates a random hobo name from John Hodgeman's book 'The Areas of my Expertise'",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": 0,
   "author": "Christopher Horrell",
   "author_uri": "https://horrell.ca/",
