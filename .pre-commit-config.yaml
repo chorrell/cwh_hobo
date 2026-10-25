@@ -31,11 +31,12 @@ repos:
     hooks:
       - id: zizmor
 
-  # Local hook: mirror the PHP syntax check that .github/workflows/test.yml runs
+  # Local hook: mirror the PHP syntax check that .github/workflows/test.yml runs.
+  # Runs in Docker so PHP doesn't need to be installed locally
   - repo: local
     hooks:
       - id: php-lint
         name: PHP syntax check (php -l)
-        entry: php -l
-        language: system
+        entry: php:8.4-cli php -l
+        language: docker_image
         files: \.php$

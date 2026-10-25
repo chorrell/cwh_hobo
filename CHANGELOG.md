@@ -14,6 +14,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `php -l` syntax check
 - Dependabot updates for pre-commit hook versions
 
+### Changed
+
+- The `php -l` pre-commit hook runs in the `php:8.4-cli` Docker image, so PHP
+  no longer needs to be installed locally
+
+### Fixed
+
+- `test_plugin.php` now defines `txpinterface` before loading the plugin.
+  Previously the plugin loaded `zem_tpl.php`, which compiled the plugin and
+  exited with status 0 before any test ran, so CI passed without testing
+  anything
+
+### Security
+
+- CI and release workflows set the `update: true` env var on `setup-php` so
+  they always use the latest PHP patch release (e.g. the fixes in PHP 8.4.27
+  and 8.5.12 from 21 Oct 2026)
+
 ## [1.0.0] - 2026-02-10
 
 ### Changed
