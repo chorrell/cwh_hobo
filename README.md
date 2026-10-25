@@ -168,7 +168,9 @@ via the Textpattern admin interface.
 ### Pre-commit Hooks
 
 This repo uses [pre-commit](https://pre-commit.com/) to catch issues (syntax
-errors, secrets, markdown lint failures, etc.) before they're committed:
+errors, secrets, markdown lint failures, etc.) before they're committed. Some
+hooks (markdownlint, the PHP syntax check) run in Docker, so Docker must be
+running, but PHP doesn't need to be installed locally:
 
 ```bash
 pip install pre-commit   # or: brew install pre-commit

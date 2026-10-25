@@ -92,7 +92,9 @@ functionality).
    ```
 
 5. **Run pre-commit hooks** (recommended before committing; runs actionlint,
-   gitleaks, markdownlint-cli2, zizmor, generic hygiene checks, and `php -l`):
+   gitleaks, markdownlint-cli2, zizmor, generic hygiene checks, and `php -l`).
+   The markdownlint and `php -l` hooks run in Docker (`php:8.4-cli` image), so
+   Docker must be running but PHP need not be installed locally:
 
    ```bash
    pre-commit run --all-files
@@ -248,7 +250,8 @@ Tests cover:
 ### PHP Version
 
 - **Minimum**: PHP 8.0
-- **Tested**: PHP 8.4, 8.5
+- **Tested**: PHP 8.4, 8.5 (the versions Textpattern recommends; latest
+  patch release via `update: true`)
 - **Features used**: Short array syntax `[]`, modern syntax
 
 ### Textpattern Version

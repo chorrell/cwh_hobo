@@ -19,6 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # Versions recommended by Textpattern: https://textpattern.com/about/system-requirements
         php-version:
           - '8.4'
           - '8.5'
@@ -34,6 +35,8 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           coverage: none
+          # Always install the latest patch release, even if the runner has an older one
+          update: true
 
       - name: Lint plugin file
         run: php -l cwh_hobo.php
