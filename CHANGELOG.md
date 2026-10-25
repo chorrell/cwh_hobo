@@ -23,6 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   run on older PHP 8 releases, but they are no longer tested or supported
 - The `php -l` pre-commit hook runs in the `php:8.4-cli` Docker image, so PHP
   no longer needs to be installed locally
+- Releases are automated with release-please, which opens a release PR with
+  the version bumps and CHANGELOG entry and attaches the built plugin to each
+  GitHub release
 
 ### Fixed
 
