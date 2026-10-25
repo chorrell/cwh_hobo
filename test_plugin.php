@@ -27,6 +27,12 @@ if (!function_exists('doTag')) {
     }
 }
 
+// Pretend to be Textpattern so the plugin doesn't load zem_tpl.php,
+// which compiles the plugin and exits before any tests run
+if (!defined('txpinterface')) {
+    define('txpinterface', 'public');
+}
+
 // Load the plugin
 require_once __DIR__ . '/cwh_hobo.php';
 
