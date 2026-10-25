@@ -9,7 +9,7 @@ name from John Hodgeman's list of 700 hobo names taken from his book
 ## Requirements
 
 - Textpattern CMS 4.7+ (tested with 4.8.x and 4.9.0)
-- PHP 8.0+ (tested with PHP 8.4 and 8.5)
+- PHP 8.4+ (tested with PHP 8.4 and 8.5)
 
 ## Installation
 
@@ -149,7 +149,7 @@ versions, please use v0.2.1 from the `main` branch.
 
 ### File Structure
 
-- `cwh_hobo.php` - Main plugin file (PHP 8.0+)
+- `cwh_hobo.php` - Main plugin file (PHP 8.4+)
 - `manifest.json` - Plugin metadata for package managers
 - `test_plugin.php` - Automated test script
 - `zem_tpl.php` - Plugin compiler (updated to latest version)

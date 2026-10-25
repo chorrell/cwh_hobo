@@ -9,7 +9,7 @@ Textpattern plugin project.
 from John Hodgman's book "The Areas of my Expertise". It's a simple,
 self-contained plugin with no external dependencies.
 
-- **Language**: PHP 8.0+
+- **Language**: PHP 8.4+
 - **Framework**: Textpattern CMS 4.7+
 - **Type**: Textpattern plugin (public-side)
 - **License**: GPL-2.0
@@ -247,7 +247,8 @@ Tests cover:
 
 ### PHP Version
 
-- **Minimum**: PHP 8.0
+- **Minimum**: PHP 8.4 (matches the tested versions and Textpattern's
+  recommended PHP versions)
 - **Tested**: PHP 8.4, 8.5
 - **Features used**: Short array syntax `[]`, modern syntax
 
@@ -436,7 +437,7 @@ Runs on: Pushed git tags matching `v*` (e.g., v1.0.0, v1.2.3)
 ## Questions to Ask Before Making Changes
 
 1. Does this change affect plugin compatibility with Textpattern 4.7+?
-2. Does this change require PHP 8.1+ features?
+2. Does this change require features newer than PHP 8.4?
 3. Does this change affect the output format (breaking change)?
 4. Have you updated all documentation files? (README, CHANGELOG, this file,
    inline help)

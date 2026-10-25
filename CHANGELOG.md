@@ -14,6 +14,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `php -l` syntax check
 - Dependabot updates for pre-commit hook versions
 
+### Changed
+
+- **Breaking**: The stated minimum PHP version is now 8.4 (was 8.0), to
+  match the versions CI tests (8.4 and 8.5) and the versions
+  [Textpattern recommends](https://textpattern.com/about/system-requirements).
+  PHP 8.0 and 8.1 are end of life. No code changed, so the plugin may still
+  run on older PHP 8 releases, but they are no longer tested or supported
+
 ## [1.0.0] - 2026-02-10
 
 ### Changed
