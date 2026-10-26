@@ -10,7 +10,7 @@ from John Hodgman's book "The Areas of my Expertise". It's a simple,
 self-contained plugin with no external dependencies.
 
 - **Language**: PHP 8.4+
-- **Framework**: Textpattern CMS 4.7+
+- **Framework**: Textpattern CMS 4.9+
 - **Type**: Textpattern plugin (public-side)
 - **License**: GPL-2.0
 
@@ -20,7 +20,8 @@ self-contained plugin with no external dependencies.
 .
 ├── cwh_hobo.php               # Main plugin file (single-file plugin)
 ├── manifest.json              # Plugin metadata for package managers
-├── test_plugin.php            # Test suite (executable PHP script)
+├── test_plugin.php            # Unit tests (executable PHP script, mocks Textpattern)
+├── tests/integration/         # Integration tests against real Textpattern releases
 ├── zem_tpl.php                # Plugin compiler (Textpattern compiler)
 ├── README.md                  # User documentation
 ├── CHANGELOG.md               # Version history (maintained by release-please)
@@ -33,7 +34,8 @@ self-contained plugin with no external dependencies.
 └── .github/
     ├── dependabot.yml         # Dependency update automation (Actions + pre-commit)
     └── workflows/
-        ├── test.yml           # GitHub Actions CI/CD
+        ├── test.yml           # Unit tests and build check
+        ├── integration.yml    # Integration tests on real Textpattern + MariaDB
         ├── markdownlint.yml   # Markdown lint CI
         └── release.yml        # release-please: release PR, tags, Releases, assets
 ```
@@ -181,6 +183,29 @@ Tests cover:
 - HTML entity preservation
 - Performance (< 1ms per call)
 
+These mock Textpattern, so they can't tell whether the plugin actually works
+inside it (they passed while the tag was unregistered and output nothing).
+
+### Integration Tests (tests/integration/)
+
+`run.sh <version> <cwh_hobo.txt>` downloads a Textpattern release (checked
+against `textpattern.sha256`), installs it with Textpattern's CLI setup,
+installs the plugin with Textpattern's own plugin installer
+(`install-plugin.php`), renders `page.txp` with debug mode on, and checks:
+
+- No "tag does not exist", "unknown attribute", PHP warning, notice or
+  deprecation in the page
+- `<txp:cwh_hobo />` outputs `#NUM: Name` with NUM from 1 to 700
+- `wraptag` and `class` produce `<p class="hobo">…</p>`, and `wraptag` alone
+  produces `<span>…</span>`
+- 10 page loads return more than one distinct name
+
+It needs PHP with `mysqli`, curl, and an empty MySQL/MariaDB database
+(`DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`). To test another Textpattern
+release, add its tarball's checksum (from the release's `.SHA256SUM` asset)
+to `textpattern.sha256`, then add the version to the matrix in
+`integration.yml`.
+
 ### GitHub Actions CI
 
 **test.yml** - Runs on every PR to `main`:
@@ -188,6 +213,12 @@ Tests cover:
 - PHP syntax check (PHP 8.4 and 8.5)
 - Test suite execution
 - Build verification
+
+**integration.yml** - Runs on every PR to `main`:
+
+- Textpattern 4.9.0 and 4.9.1 × PHP 8.4 and 8.5, against a MariaDB service
+- Installs Textpattern, installs the built `cwh_hobo.txt` with Textpattern's
+  plugin installer, and checks the rendered tags (see Integration Tests below)
 
 **markdownlint.yml** - Runs on every PR to `main`:
 
@@ -266,9 +297,13 @@ Don't bump versions or edit CHANGELOG.md by hand; release-please does both.
 
 ### Textpattern Version
 
-- **Minimum**: 4.7+
-- **Tested**: 4.8.x, 4.9.0
-- **Dependencies**: `lAtts()`, `doTag()` functions
+- **Minimum**: 4.9 (earlier versions don't run on PHP 8.4+; 4.8.8 fails in its
+  own `index.php` on the deprecated `E_STRICT` constant)
+- **Tested**: 4.9.0, 4.9.1 (integration.yml)
+- **Dependencies**: `lAtts()`, `doTag()` functions, and the tag registry
+  (`Txp::get('\Textpattern\Tag\Registry')->register()`). Textpattern 4.9
+  only runs registered tags; an unregistered tag outputs nothing and logs
+  "cwh_hobo tag does not exist"
 
 ### Breaking Changes
 
@@ -455,7 +490,7 @@ variable and `RELEASE_APP_PRIVATE_KEY` secret.
 
 ## Questions to Ask Before Making Changes
 
-1. Does this change affect plugin compatibility with Textpattern 4.7+?
+1. Does this change affect plugin compatibility with Textpattern 4.9+?
 2. Does this change require features newer than PHP 8.4?
 3. Does this change affect the output format (breaking change)?
 4. Have you updated all documentation files? (README, this file, inline

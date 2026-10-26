@@ -1,0 +1,5 @@
+<pre>
+PLAIN=[<txp:cwh_hobo />]
+WRAPPED=[<txp:cwh_hobo wraptag="p" class="hobo" />]
+NO_CLASS=[<txp:cwh_hobo wraptag="span" />]
+</pre>
