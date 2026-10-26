@@ -5,6 +5,13 @@ All notable changes to cwh_hobo will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1](https://github.com/chorrell/cwh_hobo/compare/v2.0.0...v2.0.1) (2026-10-26)
+
+
+### Bug Fixes
+
+* register the cwh_hobo tag so it works on Textpattern 4.9 ([#57](https://github.com/chorrell/cwh_hobo/issues/57)) ([53506f3](https://github.com/chorrell/cwh_hobo/commit/53506f3f068476843fad85a954eb831a6f96d7a5))
+
 ## [2.0.0](https://github.com/chorrell/cwh_hobo/compare/v1.0.0...v2.0.0) (2026-10-25)
 
 ### ⚠ BREAKING CHANGES
