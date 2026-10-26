@@ -84,7 +84,7 @@ if (0) {
 <h2>Requirements</h2>
 
 <ul>
-<li>Textpattern CMS 4.7+ (tested with 4.8.x and 4.9.0)</li>
+<li>Textpattern CMS 4.9+ (tested with 4.9.0 and 4.9.1)</li>
 <li>PHP 8.4+ (tested with PHP 8.4 and 8.5)</li>
 </ul>
 
@@ -97,6 +97,13 @@ if (0) {
 }
 
 # --- BEGIN PLUGIN CODE ---
+
+// Textpattern 4.9+ only runs registered tags; unregistered ones output
+// nothing and log "cwh_hobo tag does not exist". The check keeps the plugin
+// loadable outside Textpattern (e.g. by test_plugin.php)
+if (class_exists('\Textpattern\Tag\Registry')) {
+    Txp::get('\Textpattern\Tag\Registry')->register('cwh_hobo');
+}
 
 /**
  * Main plugin function - generates and outputs a random hobo name

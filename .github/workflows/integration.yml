@@ -1,0 +1,78 @@
+---
+# Installs real Textpattern releases, installs the built plugin with
+# Textpattern's own plugin installer, and checks the tags' rendered output.
+# test.yml's unit tests mock Textpattern, so they can't catch problems like an
+# unregistered tag; this can. See tests/integration/run.sh.
+name: Integration
+permissions:
+  contents: read
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  integration:
+    name: Textpattern ${{ matrix.textpattern }} / PHP ${{ matrix.php-version }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        # Add a version's checksum to tests/integration/textpattern.sha256
+        # before adding it here
+        textpattern:
+          - '4.9.0'
+          - '4.9.1'
+        php-version:
+          - '8.4'
+          - '8.5'
+
+    services:
+      mariadb:
+        image: mariadb:11@sha256:f16d7a344413e519dff518f27bdb221388f84b0d274c97c4fb5f2cb0dc1b34fa
+        env:
+          MARIADB_RANDOM_ROOT_PASSWORD: '1'
+          MARIADB_DATABASE: txp
+          MARIADB_USER: txp
+          # Throwaway database that only exists for this job
+          MARIADB_PASSWORD: txp-ci-only
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mysqli
+          coverage: none
+        env:
+          # Always install the latest patch release, even if the runner has an older one
+          update: true
+
+      - name: Build plugin
+        run: php cwh_hobo.php > cwh_hobo.txt
+
+      - name: Run integration test
+        env:
+          TEXTPATTERN_VERSION: ${{ matrix.textpattern }}
+          DB_HOST: 127.0.0.1
+          DB_NAME: txp
+          DB_USER: txp
+          DB_PASSWORD: txp-ci-only
+        run: tests/integration/run.sh "$TEXTPATTERN_VERSION" cwh_hobo.txt

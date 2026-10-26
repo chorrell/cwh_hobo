@@ -1,6 +1,7 @@
 # cwh_hobo
 
 [![Test](https://github.com/chorrell/cwh_hobo/actions/workflows/test.yml/badge.svg)](https://github.com/chorrell/cwh_hobo/actions/workflows/test.yml)
+[![Integration](https://github.com/chorrell/cwh_hobo/actions/workflows/integration.yml/badge.svg)](https://github.com/chorrell/cwh_hobo/actions/workflows/integration.yml)
 
 A [Textpattern CMS](https://textpattern.com) plugin that displays a random hobo
 name from John Hodgeman's list of 700 hobo names taken from his book
@@ -8,23 +9,24 @@ name from John Hodgeman's list of 700 hobo names taken from his book
 
 ## Requirements
 
-- Textpattern CMS 4.7+ (tested with 4.8.x and 4.9.0)
+- Textpattern CMS 4.9+ (tested with 4.9.0 and 4.9.1)
 - PHP 8.4+ (tested with PHP 8.4 and 8.5)
+
+Earlier Textpattern versions don't run on PHP 8.4 or later. Versions of this
+plugin before 2.0.1 don't register their tag, so on Textpattern 4.9 they
+output nothing and log "cwh_hobo tag does not exist".
 
 ## Installation
 
 ### Method 1: Standard Installation (Recommended)
 
-1. Generate the plugin installer:
-
-   ```bash
-   php cwh_hobo.php > cwh_hobo-1.0.0.txt
-   ```
+1. Download `cwh_hobo.txt` from the
+   [latest release](https://github.com/chorrell/cwh_hobo/releases/latest)
 
 2. In Textpattern admin:
    - Go to **Admin → Plugins**
    - Click "Install plugin"
-   - Paste the contents of `cwh_hobo-1.0.0.txt`
+   - Paste the contents of `cwh_hobo.txt`
    - Click "Upload"
    - Review and approve the code
    - Activate the plugin by setting its status to "Yes"
@@ -100,6 +102,28 @@ Output:
 
 ## Testing
 
+### Automated Tests
+
+- **Unit tests** (`test_plugin.php`) mock Textpattern's `lAtts()` and
+  `doTag()` and check the plugin's output, attributes and randomness:
+
+  ```bash
+  php test_plugin.php
+  ```
+
+- **Integration tests** (`tests/integration/`) install real Textpattern
+  releases (4.9.0 and 4.9.1, pinned by checksum), install the built plugin
+  with Textpattern's own plugin installer, and check the rendered tag output
+  with Textpattern's debug mode on, so any tag error or PHP warning fails the
+  test. CI runs them on PHP 8.4 and 8.5 against MariaDB. To run them locally
+  you need PHP with `mysqli`, curl, and an empty MySQL/MariaDB database:
+
+  ```bash
+  php cwh_hobo.php > cwh_hobo.txt
+  DB_HOST=127.0.0.1 DB_NAME=txp DB_USER=txp DB_PASSWORD=... \
+    tests/integration/run.sh 4.9.1 cwh_hobo.txt
+  ```
+
 ### Plugin Cache Method (Recommended for Development)
 
 1. In Textpattern admin, go to **Admin → Preferences → Admin**
@@ -128,22 +152,11 @@ Output:
 </ul>
 ```
 
-## What's New in v1.0.0
+## Upgrading
 
-This version has been modernized with:
-
-- **PHP 8.0+ compatibility** - Works with current PHP versions
-- **Modern code style** - Clean, documented, maintainable
-- **Better performance** - Lazy loading of hobo names
-- **Same functionality** - Tag usage unchanged, fully backward compatible
-
-### Upgrading from v0.2.1
-
-No changes to your templates needed! Simply uninstall the old version and
-install the new one. The `<txp:cwh_hobo />` tag works exactly the same.
-
-**Note:** This version requires PHP 8.0+. If you need to run on older PHP
-versions, please use v0.2.1 from the `main` branch.
+See [CHANGELOG.md](CHANGELOG.md) for what changed in each release. The
+`<txp:cwh_hobo />` tag and its attributes haven't changed, so templates don't
+need updating: install the new version over the old one.
 
 ## Development
 
@@ -151,7 +164,8 @@ versions, please use v0.2.1 from the `main` branch.
 
 - `cwh_hobo.php` - Main plugin file (PHP 8.4+)
 - `manifest.json` - Plugin metadata for package managers
-- `test_plugin.php` - Automated test script
+- `test_plugin.php` - Unit tests
+- `tests/integration/` - Integration tests against real Textpattern releases
 - `zem_tpl.php` - Plugin compiler (updated to latest version)
 
 ### Building for Distribution
@@ -159,7 +173,7 @@ versions, please use v0.2.1 from the `main` branch.
 Generate the plugin installer text:
 
 ```bash
-php cwh_hobo.php > cwh_hobo-1.0.0.txt
+php cwh_hobo.php > cwh_hobo.txt
 ```
 
 This creates a base64-encoded plugin file that can be distributed and installed
