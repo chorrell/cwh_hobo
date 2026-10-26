@@ -40,7 +40,10 @@ curl -fsSL -o "$work/$tarball" \
 mkdir "$work/site"
 tar -xzf "$work/$tarball" -C "$work/site" --strip-components=1
 
-# Test-only credentials for the throwaway site
+# A fresh random admin password for each throwaway site; nothing logs in, so
+# it's never printed or reused. Hex, so it needs no escaping in the JSON
+admin_password=$(php -r 'echo bin2hex(random_bytes(16));')
+
 cat >"$work/setup.json" <<EOF
 {
   "site": {"language_code": "en", "public_url": "127.0.0.1:${port}"},
@@ -50,7 +53,7 @@ cat >"$work/setup.json" <<EOF
   },
   "user": {
     "full_name": "Test Admin", "email": "admin@example.test",
-    "login_name": "admin", "password": "integration-test-only"
+    "login_name": "admin", "password": "${admin_password}"
   }
 }
 EOF
