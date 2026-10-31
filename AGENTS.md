@@ -96,8 +96,11 @@ functionality).
    npx markdownlint-cli README.md AGENTS.md
    ```
 
-5. **Run pre-commit hooks** (recommended before committing; runs actionlint,
-   gitleaks, markdownlint-cli2, zizmor, generic hygiene checks, and `php -l`).
+5. **Run pre-commit hooks** (recommended before committing; runs gitleaks,
+   markdownlint-cli2, zizmor, generic hygiene checks, and `php -l`). zizmor is
+   the GitHub Actions workflow linter; actionlint isn't used because it rejects
+   GitHub's `$/` self-repository `uses:` syntax
+   ([rhysd/actionlint#711](https://github.com/rhysd/actionlint/issues/711)).
    The markdownlint and `php -l` hooks run in Docker (`php:8.4-cli` image), so
    Docker must be running but PHP need not be installed locally:
 
