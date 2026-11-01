@@ -191,15 +191,15 @@ release-please opens a release PR that bumps the version and updates
 
 ### Pre-commit Hooks
 
-This repo uses [pre-commit](https://pre-commit.com/) to catch issues (syntax
+This repo uses [prek](https://github.com/j178/prek) to catch issues (syntax
 errors, secrets, markdown lint failures, etc.) before they're committed. Some
 hooks (markdownlint, the PHP syntax check) run in Docker, so Docker must be
 running, but PHP doesn't need to be installed locally:
 
 ```bash
-pip install pre-commit   # or: brew install pre-commit
-pre-commit install
-pre-commit run --all-files
+brew install prek
+prek install
+prek run --all-files
 ```
 
 ## License
