@@ -105,7 +105,7 @@ functionality).
    Docker must be running but PHP need not be installed locally:
 
    ```bash
-   pre-commit run --all-files
+   prek run --all-files
    ```
 
 ### Testing in Textpattern
